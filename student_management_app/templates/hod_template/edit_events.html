@@ -1,0 +1,112 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Edit Events
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Edit Events</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" method="POST" enctype="multipart/form-data" action="">
+                    {% csrf_token %}
+
+                    
+                            {% comment %} Display Messages {% endcomment %}
+                            {% if messages %}
+                            <div class="form-group">
+                            <div class="col-12">
+                                {% for message in messages %}
+                                {% if message.tags == "error" %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                {% elif message.tags == "success" %}
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            </div>
+                            {% endif %}
+                        
+
+                    <div class="card-body">
+                   
+                        <div class="form-group">
+                            <label>Title</label>
+                            {{form.title}}
+                            
+                        </div>
+                    
+                        <div>
+                            {% if event.featured_image %}
+					        <img class="img-fluid" src="{{event.featured_image.url}}"/>
+					        {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                           <input type="file" name="{{form.featured_image.name}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Content </label>
+                            {{form.content}}
+                        
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            {{form.status}}
+                        </div>
+
+                        <div class="form-group">
+                            <label>URL Link</label>
+                            {{form.url_link}}
+                        </div>
+                       
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+                </div>
+                <!-- /.card -->
+
+            </div>
+        </div>
+
+    </div><!-- /.container-fluid -->
+  </section>
+
+
+
+
+
+
+
+{% endblock main_content %}
+
+
