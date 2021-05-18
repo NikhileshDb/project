@@ -76,7 +76,10 @@ class Students(models.Model):
     session_year_id = models.ForeignKey(SessionYearModel, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    myconfirm_password = models.CharField(max_length=200, null=True)
     objects = models.Manager()
+    def __str__(self):
+        return self.myconfirm_password
 
 
 

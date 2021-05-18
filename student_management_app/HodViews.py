@@ -8,6 +8,8 @@ from django.core import serializers
 import json
 from .forms import NoticeForm, EventsForm, HeroCarousalForm, FacultyMemberForm
 
+from django.conf import settings
+from django.core.mail import send_mail
 import os
 
 from student_management_app.models import *
@@ -346,6 +348,7 @@ def add_student_save(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+            myconfirm_password = form.cleaned_data['myconfirm_password']
             address = form.cleaned_data['address']
             session_year_id = form.cleaned_data['session_year_id']
             course_id = form.cleaned_data['course_id']
@@ -366,6 +369,7 @@ def add_student_save(request):
             try:
                 user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name, user_type=3)
                 user.students.address = address
+                user.students.myconfirm_password = myconfirm_password
 
                 course_obj = Courses.objects.get(id=course_id)
                 user.students.course_id = course_obj
@@ -377,6 +381,13 @@ def add_student_save(request):
                 user.students.profile_pic = profile_pic_url
                 user.save()
                 messages.success(request, "Student Added Successfully!")
+                #Send Email
+                send_mail(
+                'Your application is approved!',
+                f'Hi {user.username}, here is your login id ({user.email}) and Password ({user.students.myconfirm_password}), thank you for registering in Rajarshi College.',
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False,)
                 return redirect('add_student')
             except:
                 messages.error(request, "Failed to Add Student!")
@@ -1096,4 +1107,7 @@ def delete_faculty_member(request, member_id):
     except:
         meesages.error(request, 'Failed to Delete Faculty Member')
         return redirect('/faculty_member')
+
+
+
 
