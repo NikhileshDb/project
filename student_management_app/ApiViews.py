@@ -51,24 +51,24 @@ def notice_list_item(request, item_id):
 @api_view(['GET'])
 def event_list(request):
     events = Events.objects.all()
-    serializer = EventsSerializer(events, many=True)
+    serializer = EventsSerializer(events, many=True, context={"request": request})
     return Response(serializer.data)
 
 @api_view(['GET'])
 def event_list_item(request, item_id):
     event = Events.objects.get(pk=item_id)
-    serializer = EventsSerializer(event, many=False)
+    serializer = EventsSerializer(event, many=False, context={"request":request})
     return Response(serializer.data)
     
 @api_view(['GET'])
 def carousal_list(request):
     carousal = HeroCarousal.objects.all()
-    serializer = CarousalSerializer(carousal, many=True)
+    serializer = CarousalSerializer(carousal, many=True, context={"request":request})
     return Response(serializer.data)
 @api_view(['GET'])
 def carousal_list_item(request, item_id):
     carousal_item = HeroCarousal.objects.get(pk=item_id)
-    serializer = CarousalSerializer(carousal_item, many=False)
+    serializer = CarousalSerializer(carousal_item, many=False, context={"request":request})
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -82,3 +82,7 @@ def faculty_member_list_item(request, item_id):
     member = FacultyMember.objects.get(pk=item_id)
     serializer = FacultyMemberSerializer(member, many=False)
     return Response(serializer.data)
+
+
+def JqueryPlayground(request):
+    return render(request, 'hod_template/jqueryplayground.html')

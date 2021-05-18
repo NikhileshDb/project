@@ -230,6 +230,7 @@ class Events(models.Model):
     content = models.TextField(max_length=1000, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices = STATUS, default = 'Draft')
+    
 
 IMAGE_STATUS = (
     ('Featured',"Featured"),

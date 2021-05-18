@@ -3,6 +3,11 @@ from django.urls import path, include
 from . import views
 from .import HodViews, StaffViews, StudentViews, ApiViews
 
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
+
+
 
 urlpatterns = [
     path('', views.loginPage, name="login"),
@@ -62,28 +67,28 @@ urlpatterns = [
     path('noticelist/', HodViews.noticelist, name="noticelist"),
     path('create_notice/', HodViews.CreateNotice, name="create_notice"),
     path('create_notice_save/', HodViews.create_notice_save, name='create_notice_save'),
-    path('edit_notice/<str:notice_id>',HodViews.edit_notice, name="edit_notice"),
-    path('delete_notice/<str:notice_id>', HodViews.delete_notice, name="delete_notice"),
+    path('edit_notice/<str:notice_id>/',HodViews.edit_notice, name="edit_notice"),
+    path('delete_notice/<str:notice_id>/', HodViews.delete_notice, name="delete_notice"),
     #Catagory
     path('category/', HodViews.manage_category, name="category"),
     path('add_catagory/',HodViews.add_category, name="add_category"),
-    path('edit_category/<str:category_id>', HodViews.edit_category, name="edit_category"),
-    path('delete_category/<str:category_id>', HodViews.delete_category, name="delete_category"),
+    path('edit_category/<str:category_id>/', HodViews.edit_category, name="edit_category"),
+    path('delete_category/<str:category_id>/', HodViews.delete_category, name="delete_category"),
     #Events Path
     path('events/', HodViews.events, name="events"),
     path('add_events/', HodViews.add_events, name="add_events"), 
-    path('edit_events/<str:event_id>', HodViews.edit_events, name="edit_events"),
-    path('delete_events/<str:event_id>',HodViews.delete_events, name="delete_events"),
+    path('edit_events/<str:event_id>/', HodViews.edit_events, name="edit_events"),
+    path('delete_events/<str:event_id>/',HodViews.delete_events, name="delete_events"),
     #Carousal Path
     path('hero_carousal/', HodViews.manage_carousal, name='hero_carousal'),
     path('add_carousal/', HodViews.add_carousal, name='add_carousal'),
-    path('edit_carousal/<str:carousal_id>', HodViews.edit_carousal, name="edit_carousal"),
-    path('delete_carousal/<str:carousal_id>', HodViews.delete_carousal, name='delete_carousal'),
+    path('edit_carousal/<str:carousal_id>/', HodViews.edit_carousal, name="edit_carousal"),
+    path('delete_carousal/<str:carousal_id>/', HodViews.delete_carousal, name='delete_carousal'),
     #Faculty Member
     path('faculty_member/', HodViews.faculty_member, name="faculty_member"),
     path('add_faculty_member', HodViews.add_faculty_member, name="add_faculty_member"),
-    path('edit_faculty_member/<str:member_id>', HodViews.edit_faculty_member, name="edit_faculty_member"),
-    path('delete_faculty_member/<str:member_id>',HodViews.delete_faculty_member, name="delete_faculty_member"),
+    path('edit_faculty_member/<str:member_id>/', HodViews.edit_faculty_member, name="edit_faculty_member"),
+    path('delete_faculty_member/<str:member_id>/',HodViews.delete_faculty_member, name="delete_faculty_member"),
     
     
 
@@ -130,6 +135,14 @@ urlpatterns = [
     path('api/carousal_list/<str:item_id>/', ApiViews.carousal_list_item, name="carousal_list_item"),
     path('api/faculty_member/', ApiViews.faculty_member_list, name="faculty_member_list"),
     path('api/faculty_member/<str:item_id>/', ApiViews.faculty_member_list_item, name="faculty_member_list_item"),
+
+    #myPath
+    path('jquery/', ApiViews.JqueryPlayground, name = "jquery"),
+
+    #JWT
+    path('auth-jwt/', obtain_jwt_token),
+    path('auth-jwt-refresh,', refresh_jwt_token),
+    path('auth-jwt-verify/', verify_jwt_token),
 
 
 
