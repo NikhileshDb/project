@@ -1,1 +1,1 @@
-web: gunicorn rollete.wsgi
+web: gunicorn student_management_system.wsgi
